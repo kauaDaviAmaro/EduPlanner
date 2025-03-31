@@ -50,7 +50,7 @@ npm run build
 npm run test:unit
 ```
 
-### 6️Analisar e Corrigir Código com [ESLint](https://eslint.org/)
+### Analisar e Corrigir Código com [ESLint](https://eslint.org/)
 
 ```sh
 npm run lint

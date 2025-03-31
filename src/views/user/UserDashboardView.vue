@@ -3,36 +3,26 @@
     <h1>Bem vindo de volta!</h1>
 
     <div class="dashboard">
-      <div class="card">
-        <router-link to="/">
-          <img src="@/assets/imgs/dashboard/home.png" alt="icon" />
-          Home
-        </router-link>
-      </div>
-      <div class="card">
-        <router-link to="/">
-          <img src="@/assets/imgs/dashboard/planejamento.png" alt="icon" />
-          Criar planejamento
-        </router-link>
-      </div>
-      <div class="card">
-        <router-link to="/">
-          <img src="@/assets/imgs/dashboard/atividades.png" alt="icon" />
-          Minhas atividades
-        </router-link>
-      </div>
-      <div class="card">
-        <router-link to="/">
-          <img src="@/assets/imgs/dashboard/biblioteca.png" alt="icon" />
-          Biblioteca
-        </router-link>
-      </div>
-      <div class="card">
-        <router-link to="/">
-          <img src="@/assets/imgs/dashboard/relatorio.png" alt="icon" />
-          Relatórios
-        </router-link>
-      </div>
+      <router-link to="/" class="card">
+        <img src="@/assets/imgs/dashboard/home.png" alt="icon" />
+        Home
+      </router-link>
+      <router-link to="/" class="card">
+        <img src="@/assets/imgs/dashboard/planejamento.png" alt="icon" />
+        Criar planejamento
+      </router-link>
+      <router-link to="/" class="card">
+        <img src="@/assets/imgs/dashboard/atividades.png" alt="icon" />
+        Minhas atividades
+      </router-link>
+      <router-link to="/" class="card">
+        <img src="@/assets/imgs/dashboard/biblioteca.png" alt="icon" />
+        Biblioteca
+      </router-link>
+      <router-link to="/" class="card">
+        <img src="@/assets/imgs/dashboard/relatorio.png" alt="icon" />
+        Relatórios
+      </router-link>
     </div>
   </main>
 </template>
@@ -41,6 +31,7 @@
 main {
   margin: 1rem;
 }
+
 .dashboard {
   display: flex;
   flex-wrap: wrap;
@@ -53,17 +44,12 @@ h1 {
   font-weight: bold;
 }
 
-.dashboard .card a {
-  display: flex;
-  align-items: center;
+.dashboard .card {
   gap: 10px;
-
   font-size: 1.2em;
   color: black;
   text-decoration: none;
-}
-
-.dashboard .card {
+  align-items: center;
   padding-left: 10px;
   display: flex;
   background-color: #ecf0f2;
