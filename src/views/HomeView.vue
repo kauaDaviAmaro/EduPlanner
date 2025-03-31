@@ -1,9 +1,20 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import NavbarLayout from '@/layouts/NavbarLayout.vue';
 </script>
 
 <template>
-  <RouterLink to="/login">Login</RouterLink>
-
-  <h1>Home</h1>
+  <NavbarLayout />
+  <div class="banner">
+    <img src="@/assets/imgs/EduPlanner.png" alt="" srcset="">
+  </div>
 </template>
+
+<style scoped>
+.banner img {
+  width: 100%;
+  height: calc(100vh - 60px);
+  max-width: 100%;
+  max-height: 100%;
+  user-select: none;
+}
+</style>

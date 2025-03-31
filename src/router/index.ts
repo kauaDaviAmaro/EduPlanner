@@ -4,6 +4,8 @@ import AdminDashboardView from '@/views/admin/AdminDashboardView.vue';
 import LoginView from '@/views/LoginView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 import HomeView from '@/views/HomeView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import AboutView from '@/views/AboutView.vue';
 
 const routes = [
   {
@@ -18,6 +20,14 @@ const routes = [
     path: '/user',
     component: UserDashboardView,
     meta: { requiresAuth: true, role: 'user' } // Proteção de rota
+  },
+  {
+    path: '/register',
+    component: RegisterView
+  },
+  {
+    path: '/about',
+    component: AboutView
   },
   {
     path: '/admin',

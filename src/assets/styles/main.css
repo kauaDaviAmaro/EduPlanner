@@ -1,2 +1,6 @@
 @import 'reset.css';
 @import 'colors.css';
+
+html {
+  font-family: 'Open Sans', sans-serif;
+}
