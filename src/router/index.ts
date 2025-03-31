@@ -17,7 +17,7 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/user',
+    path: '/dashboard',
     component: UserDashboardView,
     meta: { requiresAuth: true, role: 'user' } // Proteção de rota
   },
