@@ -4,17 +4,21 @@ import NavbarLayout from '@/layouts/NavbarLayout.vue';
 
 <template>
   <NavbarLayout />
-  <div class="banner">
-    <img src="@/assets/imgs/EduPlanner.png" alt="" srcset="">
-  </div>
+  <div class="banner"></div>
 </template>
 
 <style scoped>
-.banner img {
-  width: 100%;
-  height: calc(100vh - 2px);
-  max-width: 100%;
-  max-height: 100%;
-  user-select: none;
+.banner {
+  background-image: url('@/assets/imgs/EduPlanner.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+@media only screen and (max-width: 700px) {
+  .banner {
+    background-image: url('@/assets/imgs/EduPlannerMobile.png');
+  }
 }
 </style>

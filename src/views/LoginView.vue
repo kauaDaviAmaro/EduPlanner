@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import NavbarLayout from '@/layouts/NavbarLayout.vue';
-import { ref } from 'vue';
+  import { ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
 import { LoginPayload } from '@/types/index';
 

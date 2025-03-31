@@ -90,4 +90,10 @@ import { RouterLink } from 'vue-router';
   background-color: var(--color-primary);
   border-radius: 7px;
 }
+
+@media only screen and (max-width: 700px) {
+  .navbar-links {
+    display: none;
+  }
+}
 </style>
