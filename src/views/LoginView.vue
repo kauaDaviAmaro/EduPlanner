@@ -36,21 +36,25 @@ const showPassword = () => {
 
 const validateEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  console.log(regex.test(email));
 
   return regex.test(email);
 };
 
 const validateLogin = () => {
   emailError.value = !validateEmail(email.value);
-  passwordError.value = password.value.trim() === '';
+  passwordError.value = password.value.trim() === '' || password.value.lenght < 5;
 
   return emailError.value && !passwordError.value;
 };
 </script>
 
 <template>
-  <NavbarLayout />
+  <div class="back">
+    <router-link to="/">
+      <i class="bx bx-left-arrow-alt"></i>
+      Voltar
+    </router-link>
+  </div>
   <div class="login-container">
     <form @submit.prevent="handleLogin" novalidate>
       <img src="@/assets/imgs/perfil.png" alt="perfil" />
@@ -90,7 +94,7 @@ const validateLogin = () => {
   background-image: url('@/assets/imgs/login.png');
   background-size: cover;
   background-position: center;
-  height: calc(100vh - 60px);
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,7 +102,6 @@ const validateLogin = () => {
 }
 
 .login-container form {
-  transform: translateY(-60px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -164,5 +167,19 @@ const validateLogin = () => {
 
 .login-container form .input-group.input-error {
   border-color: red;
+}
+
+.back {
+  position: absolute;
+}
+
+.back a {
+  font-weight: bold;
+  margin: 1rem;
+  color: black;
+  font-size: 1.5em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
 }
 </style>

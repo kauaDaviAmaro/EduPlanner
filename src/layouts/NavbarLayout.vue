@@ -7,7 +7,7 @@ import { RouterLink } from 'vue-router';
     <div class="navbar-container">
       <div class="navbar-content">
         <div class="navbar-logo">
-          <RouterLink to="/">EduPlanner</RouterLink>
+          <RouterLink to="/"><span id="firstBrand">Edu</span>Planner</RouterLink>
         </div>
         <ul class="navbar-links">
           <li>
@@ -19,7 +19,8 @@ import { RouterLink } from 'vue-router';
         </ul>
       </div>
       <div class="navbar-login">
-        <RouterLink to="/login"><i class="bx bx-log-in"></i> Login</RouterLink>
+        <RouterLink to="/login" id="login">Entrar</RouterLink>
+        <RouterLink to="/register" id="register">Cadastrar-se</RouterLink>
       </div>
     </div>
   </nav>
@@ -27,9 +28,21 @@ import { RouterLink } from 'vue-router';
 
 <style scoped>
 .navbar {
-  background-color: var(--color-primary);
+  /* background-color: rgba(24, 26, 27, 0.15); */
+  background-color: #807cff81;
+  backdrop-filter: blur(5px);
+  width: 100%;
+  position: absolute;
   font-weight: bold;
   font-size: 1.2rem;
+}
+
+/* #firstBrand {
+  color: #DBA8AC;
+} */
+
+.navbar-logo {
+  font-size: 1.2em;
 }
 
 .navbar-container {
@@ -55,6 +68,11 @@ import { RouterLink } from 'vue-router';
   font-size: 1.5rem;
 }
 
+.navbar-login {
+  display: flex;
+  gap: 1rem;
+}
+
 .navbar-login a {
   display: flex;
   align-items: center;
@@ -65,5 +83,11 @@ import { RouterLink } from 'vue-router';
 .navbar a {
   color: var(--color-white);
   text-decoration: none;
+}
+
+#register {
+  padding: 7px;
+  background-color: var(--color-primary);
+  border-radius: 7px;
 }
 </style>
