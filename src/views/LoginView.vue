@@ -8,15 +8,20 @@ const authStore = useAuthStore();
 
 const email = ref('');
 const password = ref('');
+const emailError = ref(false);
+const passwordError = ref(false);
 
 const handleLogin = async () => {
+  if (!validateLogin()) {
+    return;
+  }
+
   const loginPayload: LoginPayload = {
     username: email.value,
     password: password.value,
   };
 
   await authStore.login(loginPayload);
-  alert('Login realizado com sucesso!');
 };
 
 const showPassword = () => {
@@ -28,23 +33,51 @@ const showPassword = () => {
     passwordIcon.classList.toggle('bxs-hide');
   }
 };
+
+const validateEmail = (email) => {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  console.log(regex.test(email));
+
+  return regex.test(email);
+};
+
+const validateLogin = () => {
+  emailError.value = !validateEmail(email.value);
+  passwordError.value = password.value.trim() === '';
+
+  return emailError.value && !passwordError.value;
+};
 </script>
 
 <template>
   <NavbarLayout />
   <div class="login-container">
-    <form @submit.prevent="handleLogin">
+    <form @submit.prevent="handleLogin" novalidate>
       <img src="@/assets/imgs/perfil.png" alt="perfil" />
-      <div class="input-group">
+      <div class="input-group" :class="{ 'input-error': emailError }">
         <i class="bx bxs-envelope"></i>
-        <input v-model="email" type="email" placeholder="Email" required />
+        <input
+          v-model="email"
+          type="email"
+          placeholder="Email"
+          required
+          v-on:keypress="validateLogin"
+        />
       </div>
-      <div class="input-group">
+      <div class="input-group" :class="{ 'input-error': passwordError }">
         <i class="bx bxs-lock"></i>
-        <input id="passwordInput" v-model="password" type="password" placeholder="Senha" required />
+        <input
+          id="passwordInput"
+          v-model="password"
+          type="password"
+          placeholder="Senha"
+          required
+          v-on:keypress="validateLogin"
+        />
         <i id="passwordIcon" class="bx bxs-show" v-on:click="showPassword"></i>
       </div>
       <button type="submit">Login</button>
+
       <div class="register">
         <p>Não tem uma conta? <router-link to="/register">Cadastre-se</router-link></p>
       </div>
@@ -127,5 +160,9 @@ const showPassword = () => {
 }
 .register p a {
   color: #197dc9;
+}
+
+.login-container form .input-group.input-error {
+  border-color: red;
 }
 </style>
