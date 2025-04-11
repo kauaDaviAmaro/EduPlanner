@@ -1,48 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import UserDashboardView from '@/views/user/UserDashboardView.vue';
-import AdminDashboardView from '@/views/admin/AdminDashboardView.vue';
-import LoginView from '@/views/LoginView.vue';
-import NotFoundView from '@/views/NotFoundView.vue';
 import HomeView from '@/views/HomeView.vue';
-import RegisterView from '@/views/RegisterView.vue';
-import AboutView from '@/views/AboutView.vue';
+import PlanejamentoView from '@/views/user/PlanejamentoView.vue';
+import UserLayout from '@/layouts/UserLayout.vue';
 
 const routes = [
+  { path: '/', component: HomeView },
   {
     path: '/',
-    component: HomeView
+    component: UserLayout,
+    children: [
+      { path: '/dashboard', component: () => import('@/views/user/UserDashboardView.vue') },
+      { path: '/planejamento', component: PlanejamentoView },
+      { path: '/atividades', component: () => import('@/views/user/AtividadesView.vue') },
+      { path: '/biblioteca', component: () => import('@/views/user/BibliotecaView.vue') },
+      { path: '/relatorios', component: () => import('@/views/user/RelatoriosView.vue') },
+      { path: '/perfil', component: () => import('@/views/user/PerfilView.vue') },
+      { path: '/sobre', component: () => import('@/views/user/SobreView.vue') },
+      { path: '/ajuda', component: () => import('@/views/user/AjudaView.vue') },
+    ],
+    meta: { requiresAuth: true },
   },
-  {
-    path: '/login',
-    component: LoginView
-  },
-  {
-    path: '/dashboard',
-    component: UserDashboardView,
-    meta: { requiresAuth: true, role: 'user' } // Proteção de rota
-  },
-  {
-    path: '/register',
-    component: RegisterView
-  },
-  {
-    path: '/about',
-    component: AboutView
-  },
-  {
-    path: '/admin',
-    component: AdminDashboardView,
-    meta: { requiresAuth: true, role: 'admin' } // Proteção de rota
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    component: NotFoundView
-  }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 });
 
 export default router;
