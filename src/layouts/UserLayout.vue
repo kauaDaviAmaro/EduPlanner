@@ -29,6 +29,10 @@
           <i class="bx bx-bar-chart-square"></i>
           <span v-if="!collapsed">Relatórios</span>
         </router-link>
+        <router-link to="/perfil" exact-active-class="active">
+          <i class="bx bx-user"></i>
+          <span v-if="!collapsed">Perfil</span>
+        </router-link>
       </nav>
 
       <div class="logout">
@@ -46,21 +50,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { authService } from '@/services/auth'
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { authService } from '@/services/auth';
 
-const collapsed = ref(true)
-const router = useRouter()
+const collapsed = ref(true);
+const router = useRouter();
 
 function toggleSidebar() {
-  collapsed.value = !collapsed.value
+  collapsed.value = !collapsed.value;
 }
 
 async function logout() {
-  await authService.logout()
-  localStorage.removeItem('token')
-  router.push('/login')
+  await authService.logout();
+  localStorage.removeItem('token');
+  router.push('/login');
 }
 </script>
 

@@ -1,3 +1,63 @@
+<template>
+  <router-link to="/" class="back-link"> <i class="bx bx-arrow-back"></i> Voltar </router-link>
+
+  <div class="login-page">
+    <div class="login-container">
+      <h1 class="logo">EduPlanner</h1>
+      <h2>Entrar na sua conta</h2>
+
+      <form @submit.prevent="handleLogin" novalidate>
+        <!-- Email -->
+        <div class="input-group" :class="{ error: emailError }">
+          <label for="email">Email</label>
+          <div class="input-wrapper">
+            <i class="bx bx-envelope"></i>
+            <input
+              id="email"
+              v-model="email"
+              type="email"
+              placeholder="exemplo@dominio.com"
+              required
+            />
+          </div>
+          <span v-if="emailError" class="error-text">Email inválido</span>
+        </div>
+
+        <!-- Senha -->
+        <div class="input-group" :class="{ error: passwordError }">
+          <label for="password">Senha</label>
+          <div class="input-wrapper">
+            <i class="bx bx-lock-alt"></i>
+            <input
+              id="passwordInput"
+              v-model="password"
+              type="password"
+              placeholder="Digite sua senha"
+              required
+            />
+            <i
+              id="passwordIcon"
+              class="bx bxs-show toggle-password"
+              @click="showPassword"
+              title="Mostrar/ocultar senha"
+            ></i>
+          </div>
+          <span v-if="passwordError" class="error-text">Senha inválida</span>
+        </div>
+
+        <!-- Botão -->
+        <button type="submit" class="btn">Entrar</button>
+
+        <!-- Link de cadastro -->
+        <p class="register-link">
+          Ainda não tem uma conta?
+          <router-link to="/register">Cadastre-se</router-link>
+        </p>
+      </form>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/authStore';
@@ -11,9 +71,7 @@ const emailError = ref(false);
 const passwordError = ref(false);
 
 const handleLogin = async () => {
-  if (!validateLogin()) {
-    return;
-  }
+  if (!validateLogin()) return;
 
   const loginPayload: LoginPayload = {
     username: email.value,
@@ -25,160 +83,155 @@ const handleLogin = async () => {
 
 const showPassword = () => {
   const passwordInput = document.querySelector('#passwordInput') as HTMLInputElement;
-  const passwordIcon = document.querySelector('#passwordIcon  ') as HTMLElement;
-  if (passwordInput) {
-    passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-    passwordIcon.classList.toggle('bxs-show');
-    passwordIcon.classList.toggle('bxs-hide');
+  const passwordIcon = document.querySelector('#passwordIcon') as HTMLElement;
+  if (passwordInput && passwordIcon) {
+    const isHidden = passwordInput.type === 'password';
+    passwordInput.type = isHidden ? 'text' : 'password';
+    passwordIcon.classList.toggle('bxs-show', !isHidden);
+    passwordIcon.classList.toggle('bxs-hide', isHidden);
   }
 };
 
-const validateEmail = (email) => {
+const validateEmail = (email: string): boolean => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   return regex.test(email);
 };
 
 const validateLogin = () => {
   emailError.value = !validateEmail(email.value);
-  passwordError.value = password.value.trim() === '' || password.value.lenght < 5;
-
-  return emailError.value && !passwordError.value;
+  passwordError.value = password.value.trim() === '' || password.value.length < 5;
+  return !emailError.value && !passwordError.value;
 };
 </script>
 
-<template>
-  <div class="back">
-    <router-link to="/">
-      <i class="bx bx-left-arrow-alt"></i>
-      Voltar
-    </router-link>
-  </div>
-  <div class="login-container">
-    <form @submit.prevent="handleLogin" novalidate>
-      <img src="@/assets/imgs/perfil.png" alt="perfil" />
-      <div class="input-group" :class="{ 'input-error': emailError }">
-        <i class="bx bxs-envelope"></i>
-        <input
-          v-model="email"
-          type="email"
-          placeholder="Email"
-          required
-          v-on:keypress="validateLogin"
-        />
-      </div>
-      <div class="input-group" :class="{ 'input-error': passwordError }">
-        <i class="bx bxs-lock"></i>
-        <input
-          id="passwordInput"
-          v-model="password"
-          type="password"
-          placeholder="Senha"
-          required
-          v-on:keypress="validateLogin"
-        />
-        <i id="passwordIcon" class="bx bxs-show" v-on:click="showPassword"></i>
-      </div>
-      <button type="submit">Login</button>
-
-      <div class="register">
-        <p>Não tem uma conta? <router-link to="/register">Cadastre-se</router-link></p>
-      </div>
-    </form>
-  </div>
-</template>
-
 <style scoped>
+.back-link {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.2rem;
+  color: #807cff;
+  text-decoration: none;
+}
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f8;
+  padding: 2rem;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
 .login-container {
-  background-image: url('@/assets/imgs/login.png');
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.login-container form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-width: 300px;
-}
-
-.login-container img {
-  width: 150px;
-  height: 150px;
-  margin-bottom: 2rem;
-}
-
-.login-container form .input-group {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-
-  color: #197dc9;
-  border: 1px solid #197dc9;
-  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   width: 100%;
+  max-width: 400px;
+  text-align: center;
 }
 
-.login-container form .input-group i {
-  font-size: 1.5rem;
-  padding: 0.5rem;
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #807cff;
+  margin-bottom: 0.5rem;
 }
 
-#passwordIcon {
-  cursor: pointer;
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  color: #333;
 }
 
-.login-container form .input-group input {
-  color: #197dc9;
-  padding: 0.5rem;
+.input-group {
+  margin-bottom: 1.4rem;
+  text-align: left;
+}
+
+.input-group label {
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  display: inline-block;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  background-color: #fdfdfd;
+  transition: border 0.3s;
+}
+
+.input-wrapper input {
   border: none;
   outline: none;
-  background-color: transparent;
-  width: 100%;
+  flex: 1;
+  font-size: 1rem;
+  background: transparent;
+  margin-left: 0.5rem;
 }
 
-.login-container form button {
-  background-color: #197dc9;
-  color: white;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.input-wrapper i {
+  color: #807cff;
   font-size: 1.2rem;
+}
+
+.toggle-password {
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.input-group.error .input-wrapper {
+  border-color: #ff5e5e;
+}
+
+.error-text {
+  font-size: 0.85rem;
+  color: #ff5e5e;
+  margin-top: 0.3rem;
+  display: block;
+}
+
+.btn {
+  background-color: #807cff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
   width: 100%;
-}
-
-.register {
   margin-top: 1rem;
-}
-.register p {
-  color: #197dc9;
-}
-.register p a {
-  color: #197dc9;
+  transition: background-color 0.3s;
 }
 
-.login-container form .input-group.input-error {
-  border-color: red;
+.btn:hover {
+  background-color: #6d68cc;
 }
 
-.back {
-  position: absolute;
+.register-link {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
 }
 
-.back a {
-  font-weight: bold;
-  margin: 1rem;
-  color: black;
-  font-size: 1.5em;
+.register-link a {
+  color: #807cff;
+  font-weight: 600;
   text-decoration: none;
-  display: flex;
-  align-items: center;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
 }
 </style>
